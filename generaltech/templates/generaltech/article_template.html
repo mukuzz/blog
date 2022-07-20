@@ -1,0 +1,55 @@
+<article id="article-{{article.url}}">
+    <header id="article_header">
+        <div id="title_and_desc">
+            <h1>{{ article.title }}</h1>
+            {% if article.shortDescription %}
+            <p>{{ article.shortDescription }}</p>
+            {% endif %}
+            <span id="writer">By <a href="{% url 'author_page' article.author.username %}" rel="author">{{ article.author.name }}</a></span>
+            <span><strong>&#183;</strong></span>
+            <span id="publish_date">
+                {{ article.created_on }}
+            </span>
+        </div>
+        <figure id="a_title_image_cont">
+        <img class="lazy" data-src="{{ article.titleImage.src }}" data-aspect-ratio="{{article.titleImage.data_aspect_ratio}}" />
+            <!-- <figcaption>
+                <p></p>
+            </figcaption> -->
+        </figure>
+    </header>
+    <div id="article_content">
+        {{ article.description|safe }}
+    </div>
+    <footer>
+        {% if article.tags %}
+        <div id="article_tags">
+            {% for tag in article.tags %}
+            <a href="{% url 'tag_page' tag.slug %}">{{ tag.tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div id="share_links">
+            <a href="fix_me" class="share_link">
+                <svg viewBox="0 0 100 100" width="16" height="16">
+                    <use xlink:href="#icon-facebook"></use>
+                </svg>
+            </a>
+            <a href="fix_me" class="share_link">
+                <svg viewBox="0 0 100 100" width="16" height="16">
+                    <use xlink:href="#icon-twitter  "></use>
+                </svg>
+            </a>
+            <a href="fix_me" class="share_link">
+                <svg viewBox="0 0 100 100" width="16" height="16">
+                    <use xlink:href="#icon-reddit-alien"></use>
+                </svg>
+            </a>
+            <a href="fix_me" class="share_link">
+                <svg viewBox="0 0 100 100" width="16" height="16">
+                    <use xlink:href="#icon-envelop"></use>
+                </svg>
+            </a>
+        </div>
+    </footer>
+</article>

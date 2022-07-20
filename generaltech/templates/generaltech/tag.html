@@ -1,0 +1,22 @@
+{% extends "generaltech/base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/tag.min.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/tag.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div id="main">
+  <div id="tag_info">
+    <h1>{{ tag.tag }}</h1>
+  </div>
+  <div class="norm_articles">
+    {% include "generaltech/normal_articles.html" %}
+  </div>
+  <div class="norm_articles"></div>
+</div>
+{% endblock %}

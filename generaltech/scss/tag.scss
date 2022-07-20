@@ -1,0 +1,17 @@
+@import './base';
+@import './variables';
+
+#main {
+  width: 100%;
+  max-width: $normal_articles_width;
+  margin: auto;
+  #tag_info {
+    padding: $standard_sep;
+    margin: 48px 0;
+  }
+  p, h1 {
+    margin: 0;
+  }
+
+  @import './normal_articles';
+}
