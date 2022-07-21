@@ -1,17 +1,17 @@
 {% for post in posts %}
-<a class="norm_article_cont" href="{% url 'article_page' post.url %}">
-  <img class="norm_article_img lazy" data-src="{{ post.titleImage }}" alt="" />
+<a class="norm_article_cont" href="{% url 'article_page' post.uri %}">
+  <img class="norm_article_img lazy" data-src="{{ post.titleImage.url }}" alt="" />
   <div class="article_summary">
     <h3>{{ post.title }}</h3>
     <div class="article_details">
-      {% if post.shortDescription %}
+      {% if post.description %}
       <div class="article_description">
-        <p>{{ post.shortDescription }}</p>
+        <p>{{ post.description }}</p>
       </div>
       {% endif %}
-      <span class="article_writer">By {{ post.author.name }}</span>
+      <span class="article_writer">By {{ post.authors.first.name }}</span>
       <span class="interpunct"> · </span>
-      <span class="article_publish_date">{{ post.created_on }}</span>
+      <span class="article_publish_date">{{ post.publish_time }}</span>
     </div>
   </div>
 </a>

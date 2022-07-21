@@ -15,16 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import IndexPageView, IndexFeedView, ArticlePageView, DraftPageView, AuthorPageView, AuthorFeedView, TagPageView, TagFeedView
+from .views import IndexPageView, ArticlePageView, DraftPageView, AuthorPageView, TagPageView
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexPageView.as_view(), name='index_page'),
-    path('feed/page/<int:page_num>', IndexFeedView.as_view(), name='index_feed'),
     path('article/<slug:article_url>', ArticlePageView.as_view(), name='article_page'),
     path('draft/<slug:article_uuid>', DraftPageView.as_view(), name='draft_page'),
     path('author/<slug:author_id>', AuthorPageView.as_view(), name='author_page'),
-    path('author/<slug:author_id>/feed/page/<int:page_num>', AuthorFeedView.as_view(), name='author_feed'),
     path('tag/<slug:tag_id>', TagPageView.as_view(), name='tag_page'),
-    path('tag/<slug:tag_id>/feed/page/<int:page_num>', TagFeedView.as_view(), name='tag_feed')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

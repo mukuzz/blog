@@ -4,6 +4,8 @@ from django.utils import timezone
 
 
 class Author(models.Model):
+    username = models.CharField(blank=True, max_length=256)
+    twitter = models.CharField(blank=True, max_length=256)
     name = models.CharField(blank=True, max_length=256)
     about = models.TextField(blank=True)
 
@@ -23,13 +25,13 @@ class Article(models.Model):
     uri = models.CharField(blank=False, max_length=256)
     title = models.TextField(blank=True)
     description = models.TextField(blank=True)
+    titleImage = models.ImageField(upload_to="image/")
     content = models.TextField(blank=True)
     published = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag)
     authors = models.ManyToManyField(Author)
     publish_time = models.DateTimeField(default=timezone.now)
     update_time = models.DateTimeField(default=timezone.now)
-    # titleImage = models.ImageField()
 
     def __str__(self):
         return self.uri

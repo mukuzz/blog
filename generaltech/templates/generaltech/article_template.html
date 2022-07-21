@@ -1,31 +1,31 @@
-<article id="article-{{article.url}}">
+<article id="article-{{url}}">
     <header id="article_header">
         <div id="title_and_desc">
             <h1>{{ article.title }}</h1>
-            {% if article.shortDescription %}
-            <p>{{ article.shortDescription }}</p>
+            {% if article.description %}
+            <p>{{ article.description }}</p>
             {% endif %}
-            <span id="writer">By <a href="{% url 'author_page' article.author.username %}" rel="author">{{ article.author.name }}</a></span>
+            <span id="writer">By <a href="{% url 'author_page' article.authors.first.username %}" rel="author">{{ article.authors.first.name }}</a></span>
             <span><strong>&#183;</strong></span>
             <span id="publish_date">
-                {{ article.created_on }}
+                {{ article.publish_time }}
             </span>
         </div>
         <figure id="a_title_image_cont">
-        <img class="lazy" data-src="{{ article.titleImage.src }}" data-aspect-ratio="{{article.titleImage.data_aspect_ratio}}" />
+        <img class="lazy" data-src="{{ article.titleImage.url }}" data-aspect-ratio="{{article.titleImage.data_aspect_ratio}}" />
             <!-- <figcaption>
                 <p></p>
             </figcaption> -->
         </figure>
     </header>
     <div id="article_content">
-        {{ article.description|safe }}
+        {{ article.content|safe }}
     </div>
     <footer>
-        {% if article.tags %}
+        {% if tags %}
         <div id="article_tags">
-            {% for tag in article.tags %}
-            <a href="{% url 'tag_page' tag.slug %}">{{ tag.tag }}</a>
+            {% for tag in tags %}
+            <a href="{% url 'tag_page' tag.slug %}">{{ tag.name }}</a>
             {% endfor %}
         </div>
         {% endif %}

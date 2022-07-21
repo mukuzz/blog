@@ -123,9 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = 'static'
-
+MEDIA_ROOT = 'file'
+MEDIA_URL = '/file/'
 
 # Acticle Page Settings
 
@@ -133,8 +133,5 @@ ARTICLE_LIMIT = 20
 FEATURED_LIMIT = 4
 RELATED_ARTICLE_COUNT = 3
 WEBSITE_ADDR = "https://blog.mukulsingh.in"
-API_ADDR = "https://api.pinkadda.com"
-API_VER = "v1"
-PROJECT_UUID = "7a278bc0-e776-11e9-9419-3b512ae6fea5"
 TWITTER_ACC = "mukuz_"
 FACEBOOK_ACC = "mukul1singh1"

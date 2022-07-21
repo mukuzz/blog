@@ -3,22 +3,22 @@
 
 {% block metas %}
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@{{ article.twitter_acc }}" />
-<meta name="twitter:creator" content="@{{ article.twitter_acc }}" />
+<meta name="twitter:site" content="@{{ article.authors.first.twitter }}" />
+<meta name="twitter:creator" content="@{{ article.authors.first.twitter }}" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="{{ article.url }}" />
+<meta property="og:url" content="{{ url }}" />
 <meta property="og:title" content="{{ article.title }}" />
-{% if article.shortDescription %}
-<meta property="og:description" content="{{ article.shortDescription }}" />
+{% if article.description %}
+<meta property="og:description" content="{{ article.description }}" />
 {% endif %}
-<meta property="og:image" content="{{ article.titleImage.src }}" />
+<meta property="og:image" content="{{ article.titleImage.url }}" />
 <meta property="og:image:alt" content="Image" />
-<meta property="article:published_time" content="{{ article.created_on }}" />
-<meta property="article:modified_time" content="{{ article.created_on }}" />
-<meta property="article:author" content="{{ article.author.name }}" />
-{% if article.tags %}
-    {% for tag in article.tags %}
-    <meta property="article:tag" content="{{ tag.tag }}" />
+<meta property="article:published_time" content="{{ article.publish_time }}" />
+<meta property="article:modified_time" content="{{ article.update_time }}" />
+<meta property="article:author" content="{{ article.authors.first.name }}" />
+{% if tags %}
+    {% for tag in tags %}
+    <meta property="article:tag" content="{{ tag.name }}" />
     {% endfor %}
 {% endif %}
 {% endblock%}
@@ -35,7 +35,7 @@
 <div class="suggested_articles">
     <div class="norm_articles">
         <hr>
-        {% include 'generaltech/normal_articles.html' with posts=article.suggestions %}
+        {% include 'generaltech/normal_articles.html' with posts=suggestions %}
         <hr>
     </div>
 </div>
