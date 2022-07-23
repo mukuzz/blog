@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexPageView.as_view(), name='index_page'),
     path('article/<slug:article_url>', ArticlePageView.as_view(), name='article_page'),
-    path('draft/<slug:article_uuid>', DraftPageView.as_view(), name='draft_page'),
+    path('draft/<slug:article_url>', DraftPageView.as_view(), name='draft_page'),
     path('author/<slug:author_id>', AuthorPageView.as_view(), name='author_page'),
     path('tag/<slug:tag_id>', TagPageView.as_view(), name='tag_page'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

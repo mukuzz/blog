@@ -1,43 +1,43 @@
 from django.shortcuts import render
-from django.http import Http404, JsonResponse
-from django.template.loader import render_to_string
 from django.views import View
 
 import datetime
 
 from django.conf import settings
 
-from generaltech.models import Author, Tag
-from .api_driver.db import Articles
+from generaltech.models import Article, Author, Tag
 
 
 class IndexPageView(View):
     def get(self, request):
         context = getBaseContext()
-        main_article, featured_articles, articles, tags =  Articles().getIndexPageArticles()
+        articles = Article.objects.filter(published=True)
         context['posts'] = articles
-        context['featured_posts'] = featured_articles
-        context['main_article'] = main_article
-        context['tags'] = tags[:10]
+        context['featured_posts'] = articles[1:3]
+        context['main_article'] = articles[0]
+        context['tags'] = Tag.objects.all()[:10]
         return render(request, 'generaltech/index.html', context)
 
 
 class ArticlePageView(View):
     def get(self, request, article_url):
-        article = Articles().getArticleContent(article_url)
+        article = Article.objects.get(uri=article_url, published=True)
         context = getBaseContext()
         context['article'] = article
-        context['tags'] = context['article'].tags.all()
-        context['suggestions'] = Articles().getSuggestedArticles(article_url)
+        context['tags'] = article.tags.all()
+        context['suggestions'] = article.related_articles.all()
         context['url'] = f'{settings.WEBSITE_ADDR}/article/{article.uri}'
         return render(request, 'generaltech/article.html', context)
 
 
 class DraftPageView(View):
-    def get(self, request, article_uuid):
+    def get(self, request, article_url):
+        article = Article.objects.get(uri=article_url, published=False)
         context = getBaseContext()
-        article = Articles().getDraftContent(article_uuid)
         context['article'] = article
+        context['tags'] = article.tags.all()
+        context['suggestions'] = article.related_articles.all()
+        context['url'] = f'{settings.WEBSITE_ADDR}/article/{article.uri}'
         return render(request, 'generaltech/article.html', context)
 
 
@@ -45,7 +45,7 @@ class AuthorPageView(View):
     def get(self, request, author_id):
         context = getBaseContext()
         author = Author.objects.get(username=author_id)
-        articles = Articles().getAuthorArticlesAndDetails(author_id)
+        articles = author.article_set.all()
         context['author'] = author
         context['posts'] = articles
         return render(request, 'generaltech/author.html', context)
@@ -54,9 +54,9 @@ class AuthorPageView(View):
 class TagPageView(View):
     def get(self, request, tag_id):
         context = getBaseContext()
-        articles = Articles().getTagArticlesAndDetails(tag_id)
-        context['tag'] = Tag.objects.get(slug=tag_id)
-        context['posts'] = articles
+        tag = Tag.objects.get(slug=tag_id)
+        context['tag'] = tag
+        context['posts'] = tag.article_set.all()
         return render(request, 'generaltech/tag.html', context)
 
 
